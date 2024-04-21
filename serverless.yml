@@ -6,7 +6,6 @@ configValidationMode: error
 
 plugins:
   - serverless-esbuild
-  - serverless-auto-swagger
   - serverless-dotenv-plugin
   - serverless-offline
 custom:
@@ -35,12 +34,6 @@ provider:
   runtime: nodejs16.x
   region: ${env:REGION_AWS, 'us-east-1'}
   stage: ${opt:stage, 'dev'}
-  apiGateway:
-    binaryMediaTypes:
-      - 'application/pdf'
-      - 'image/png'
-      - 'image/jpeg'
-      - 'multipart/form-data'
   httpApi:
     cors:
       allowedOrigins:
