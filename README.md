@@ -1,5 +1,7 @@
 # Serverless Lambda Boilerplate with Prisma
 
+![Serverless Lambda Boilerplate with Prisma Image](https://drive.google.com/uc?export=view&id=15jEmyphmBzbq0LiB_C0noeiz_jZEkwV0)
+
 Welcome to the Serverless Lambda Boilerplate! This project is designed to streamline the development of serverless applications using AWS Lambda and Prisma. It's built with TypeScript and includes setup for local development and deployment scripts to get you started quickly.
 
 ## Features
@@ -8,6 +10,15 @@ Welcome to the Serverless Lambda Boilerplate! This project is designed to stream
 - **Prisma ORM**: Robust database management and schema migration support.
 - **TypeScript**: Strongly typed codebase for reliability and maintainability.
 - **Local Development**: Local server simulation for easy development and testing.
+
+## Structure Overview
+
+Here's a brief overview of the main components of this boilerplate:
+
+- `src/api/users`: Contains user-related controllers, services, and validators.
+- `src/core`: Core functionalities including middleware and HTTP models.
+- `src/prisma`: Prisma service and schema for ORM.
+- `_templates`: Hygen templates for quickly generating new modules.
 
 ## Getting Started
 
@@ -118,14 +129,48 @@ npm run deploy:dev
 
 This script will set up your environment, generate the necessary Prisma client, and deploy your application to AWS using the development stage configuration.
 
-## Structure Overview
+## Creating New Modules
 
-Here's a brief overview of the main components of this boilerplate:
+This boilerplate comes equipped with a module generator script that makes it easy to scaffold new modules quickly and consistently. Each module includes a set of predefined files such as controllers, services, validators, and handler setups, tailored for serverless applications.
 
-- `src/api/users`: Contains user-related controllers, services, and validators.
-- `src/core`: Core functionalities including middleware and HTTP models.
-- `src/prisma`: Prisma service and schema for ORM.
-- `_templates`: Hygen templates for quickly generating new modules.
+### How to Use the Module Generator
+
+To create a new module, you can use the `generate:module` script included in the `package.json`. This script automates the creation of necessary files and configurations for a new module, following the defined templates in the `_templates` directory.
+
+Here’s how to generate a new module named "People":
+
+```bash
+npm run generate:module -- --name people --route people
+```
+
+### What Happens When You Generate a Module?
+
+When you run the `generate:module` command, the following will happen:
+
+1. **Module Directory**: A new directory under `src/api` will be created with the name you specified.
+2. **Files Created**:
+   - A new `controller.ts` for managing request handling.
+   - A `service.ts` for business logic associated with the module.
+   - A `validator.ts` for input validation.
+   - Handler files within a `handlers` subdirectory for different operations like create, read, update, and delete.
+   - A `functions.yml` file for defining serverless functions specific to this module.
+3. **Routing Setup**: The route you specify will be used to configure the endpoints in your serverless setup.
+
+### Customizing Your Module
+
+You can customize the templates used for module generation by modifying the EJS templates located in the `_templates/module/new` directory. These templates define the structure and content of the files that are generated for each new module.
+
+By adjusting these templates, you can ensure that every new module conforms to your project's coding standards and architectural decisions.
+
+### Integrating the New Module
+
+After generating a new module, don't forget to integrate it into your main application setup. This includes:
+
+- Adding any new dependencies required by the module.
+- Ensuring that the new serverless functions defined in the `functions.yml` of the module are correctly referenced in the main `serverless.yml`.
+- Registering any new routes and handlers in your application's routing and serverless configuration.
+
+This process ensures that your new module is fully functional and ready to be developed further or deployed as part of your application.
 
 ## Contributing
 
