@@ -14,8 +14,8 @@ import { PrismaService } from 'prisma/prisma.service';
 export const handler: Handler = async (event: any, context: Context) => {
     context.callbackWaitsForEmptyEventLoop = false;
 
-    const prisma = await PrismaService.createInstance(event);
-    const <%= variableName %> = new <%= serviceName %>(prismaService);
+    const prisma = await PrismaService.createInstance();
+    const <%= variableName %> = new <%= serviceName %>(prisma);
     const controller = new <%= controllerName %>(<%= variableName %>);
     try {
         const response = await controller.findAll(event, context);
