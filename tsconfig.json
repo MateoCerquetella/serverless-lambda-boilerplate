@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "module": "commonjs",
+    "lib": ["dom", "es6", "es2020", "esnext"],
+    "rootDir": "src",
+    "outDir": "./build",
+    "baseUrl": "src",
+    "skipLibCheck": true,
+    "moduleResolution": "node",
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "noImplicitThis": true,
+    "noFallthroughCasesInSwitch": true,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "noUnusedLocals": true,
+    "typeRoots": ["./node_modules/@types", "./src/@types"]
+  },
+  "exclude": [
+    "node_modules/**/*",
+    "node_modules/.pnpm/**/*",
+    ".serverless/**/*",
+    ".webpack/**/*",
+    "_warmup/**/*",
+    ".vscode/**/*"
+  ]
+}

@@ -1,0 +1,30 @@
+findAllUsers:
+  handler: ./src/api/users/handlers/findAll.handler
+  events:
+    - httpApi:
+        method: GET
+        path: /users
+findOneUser:
+  handler: ./src/api/users/handlers/findOne.handler
+  events:
+    - httpApi:
+        method: GET
+        path: /users/{id}
+createUser:
+  handler: ./src/api/users/handlers/create.handler
+  events:
+    - httpApi:
+        method: POST
+        path: /users
+updateUser:
+  handler: ./src/api/users/handlers/update.handler
+  events:
+    - httpApi:
+        method: PUT
+        path: /users/{id}
+deleteUser:
+  handler: ./src/api/users/handlers/delete.handler
+  events:
+    - httpApi:
+        method: DELETE
+        path: /users/{id}

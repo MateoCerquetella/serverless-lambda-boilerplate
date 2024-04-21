@@ -1,0 +1,9 @@
+---
+to: src/api/<%= h.inflection.dasherize(h.inflection.singularize(name)) %>/handlers/functions.yml
+---
+findAll<%= h.inflection.classify(name) %>:
+  handler: ./src/api/<%= h.inflection.dasherize(h.inflection.singularize(name)) %>/handlers/findAll.handler
+  events:
+    - httpApi:
+        method: GET
+        path: /<%= h.inflection.dasherize(name) %>

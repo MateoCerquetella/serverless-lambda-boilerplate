@@ -1,0 +1,84 @@
+service: goc
+frameworkVersion: '3'
+useDotenv: true
+
+configValidationMode: error
+
+plugins:
+  - serverless-esbuild
+  - serverless-auto-swagger
+  - serverless-dotenv-plugin
+  - serverless-offline
+custom:
+  serverless-offline:
+    httpPort: 3000
+    noPrependStageInUrl: true
+  esbuild:
+    format: cjs
+    packager: npm
+    bundle: true
+    minify: false
+    sourcemap: false
+    keepNames: true
+    define:
+      require.resolve: undefined
+    platform: node
+  apigwBinary:
+    types:
+      - 'application/pdf'
+      - 'image/png'
+      - 'image/jpeg'
+      - 'multipart/form-data'
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  region: ${env:REGION_AWS, 'us-east-1'}
+  stage: ${opt:stage, 'dev'}
+  apiGateway:
+    binaryMediaTypes:
+      - 'application/pdf'
+      - 'image/png'
+      - 'image/jpeg'
+      - 'multipart/form-data'
+  httpApi:
+    cors:
+      allowedOrigins:
+        - ${env:CORS_ALLOW_ORIGIN_1}
+        # - Add more allowed origins as needed
+      allowedHeaders:
+        - Content-Type
+        - X-Amz-Date
+        - Authorization
+        - X-Api-Key
+        - X-Amz-Security-Token
+        - X-Requested-With
+        - X-ID-Token
+        - X-Info-Token
+      allowedMethods:
+        - GET
+        - POST
+        - PUT
+        - DELETE
+        - PATCH
+        - OPTIONS
+        - HEAD
+      allowCredentials: true
+  environment:
+    DATABASE_URL: ${env:DATABASE_URL}
+  # vpc:
+  #   securityGroupIds:
+  #     - ${env:VPC_SECURITY_GROUP_ID}
+  #   subnetIds:
+  #     - ${env:VPC_SUBNET_ID_1}
+  #     - ${env:VPC_SUBNET_ID_2}
+
+package:
+  individually: true
+  patterns:
+    - '!node_modules/**'
+    - 'node_modules/@prisma/client/**'
+    - 'node_modules/.prisma/client/**'
+
+functions:
+  - ${file(./src/api/users/handlers/functions.yml)}
