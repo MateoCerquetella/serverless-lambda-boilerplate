@@ -15,7 +15,7 @@ Welcome to the Serverless Lambda Boilerplate! This project is designed to stream
 
 Here's a brief overview of the main components of this boilerplate:
 
-- `src/api/users`: Contains user-related controllers, services, and validators.
+- `src/api/*`: Contains module-related controllers, services, and validators.
 - `src/core`: Core functionalities including middleware and HTTP models.
 - `src/prisma`: Prisma service and schema for ORM.
 - `_templates`: Hygen templates for quickly generating new modules.
