@@ -1,4 +1,3 @@
-import { Context } from 'aws-lambda';
 import { BadRequest } from 'core/models/http/http-exception';
 
 import { errorResponse, okResponse } from '../../core/middleware/response-handler';
@@ -15,7 +14,7 @@ export class UsersController {
   }
 
 
-  async create(event: any, _context: Context) {
+  async create(event: any) {
     try {
       const user: UserCreateType = JSON.parse(event.body);
 
@@ -30,7 +29,7 @@ export class UsersController {
   }
 
 
-  async delete(event: any, _context: Context) {
+  async delete(event: any) {
     try {
       const { id } = event.pathParameters || {};
 
@@ -44,7 +43,7 @@ export class UsersController {
   }
 
 
-  async update(event: any, _context: Context) {
+  async update(event: any) {
     try {
       const { id } = event.pathParameters || {};
       const user: UserUpdateType = JSON.parse(event.body);
@@ -59,7 +58,7 @@ export class UsersController {
     }
   }
 
-  async findAll(event: any, _context: Context) {
+  async findAll(event: any) {
     try {
       const data = await this.usersService.findAll();
       return okResponse({ data });
@@ -68,7 +67,7 @@ export class UsersController {
     }
   }
 
-  async findOne(event: any, _context: Context) {
+  async findOne(event: any) {
     try {
       const { id } = event.pathParameters || {};
 

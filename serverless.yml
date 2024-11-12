@@ -8,7 +8,14 @@ plugins:
   - serverless-esbuild
   - serverless-dotenv-plugin
   - serverless-offline
+  - serverless-plugin-split-stacks
+  - serverless-prune-plugin
 custom:
+  splitStacks:
+    nestedStackCount: 20
+    perFunction: false
+    perType: false
+    perGroupFunction: true
   serverless-offline:
     httpPort: 3000
     noPrependStageInUrl: true
@@ -28,12 +35,25 @@ custom:
       - 'image/png'
       - 'image/jpeg'
       - 'multipart/form-data'
+  prune:
+    number: 5
+    automatic: true
 
 provider:
   name: aws
+  timeout: 30
   runtime: nodejs16.x
   region: ${env:REGION_AWS, 'us-east-1'}
   stage: ${opt:stage, 'dev'}
+  deploymentBucket:
+    name: 'serverless-deployment-artifacts'
+    maxPreviousDeploymentArtifacts: 10
+  apiGateway:
+    binaryMediaTypes:
+      - 'application/pdf'
+      - 'image/png'
+      - 'image/jpeg'
+      - 'multipart/form-data'
   httpApi:
     cors:
       allowedOrigins:
@@ -65,6 +85,12 @@ provider:
   #   subnetIds:
   #     - ${env:VPC_SUBNET_ID_1}
   #     - ${env:VPC_SUBNET_ID_2}
+  iam:
+    role:
+      managedPolicies:
+        - arn:aws:iam::aws:policy/AmazonS3FullAccess
+        # - arn:aws:iam::aws:policy/AmazonSESFullAccess
+        # Add more managed policies as needed
 
 package:
   individually: true

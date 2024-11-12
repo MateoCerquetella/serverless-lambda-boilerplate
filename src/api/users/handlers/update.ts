@@ -5,16 +5,15 @@ import { UsersController } from '../controller';
 import { UsersService } from '../service';
 
 export const handler: Handler = async (event: any, context: Context) => {
-    context.callbackWaitsForEmptyEventLoop = false;
+  context.callbackWaitsForEmptyEventLoop = false;
 
-    const prisma = await PrismaService.createInstance();
-    const service = new UsersService(prisma);
-    const controller = new UsersController(service);
+  const prisma = await PrismaService.createInstance();
+  const service = new UsersService(prisma);
+  const controller = new UsersController(service);
 
-    try {
-        const response = await controller.update(event, context);
-        return response;
-    } finally {
-        await prisma.disconnect();
-    }
+  try {
+    return await controller.update(event);
+  } finally {
+    await prisma.disconnect();
+  }
 };

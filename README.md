@@ -114,6 +114,7 @@ This will generate a new set of migration files reflecting changes since the las
 To start the local development server:
 
 ```bash
+npm run predeploy (just once)
 npm run dev
 ```
 

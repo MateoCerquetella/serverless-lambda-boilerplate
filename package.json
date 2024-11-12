@@ -1,40 +1,48 @@
 {
-    "name": "serverless-lambda-boilerplate",
-    "version": "1.0.0",
-    "description": "",
-    "author": "Mateo Cerquetella",
-    "private": true,
-    "scripts": {
-        "predeploy:setup": "npx serverless plugin install -n serverless-dotenv-plugin && npm install && npm run prisma:generate",
-        "deploy:dev": "npm run predeploy:setup && npx sls deploy --verbose --stage dev",
-        "dev": "sls offline --reloadHandler",
-        "generate:module": "hygen module new",
-        "prisma:generate": "prisma generate --schema ./src/prisma/schema.prisma",
-        "prisma:pull": "prisma db pull --schema ./src/prisma/schema.prisma",
-        "prisma:migration:new": "prisma migrate dev --schema ./src/prisma/schema.prisma --name",
-        "prisma:migration:deploy": "prisma migrate deploy --schema ./src/prisma/schema.prisma"
-    },
-    "dependencies": {
-        "@prisma/client": "^5.11.0",
-        "aws-lambda": "^1.0.7",
-        "jsonwebtoken": "^9.0.2",
-        "zod": "^3.22.4"
-    },
-    "devDependencies": {
-        "@types/aws-lambda": "^8.10.136",
-        "@types/jsonwebtoken": "^9.0.6",
-        "@types/node": "^20.11.26",
-        "dotenv": "^16.3.1",
-        "esbuild": "^0.17.11",
-        "hygen": "^6.2.11",
-        "prettier": "^3.2.5",
-        "prisma": "^5.11.0",
-        "serverless": "^3.38.0",
-        "serverless-dotenv-plugin": "^6.0.0",
-        "serverless-esbuild": "^1.50.0",
-        "serverless-offline": "^13.3.0",
-        "ts-node": "^10.9.2",
-        "tsx": "^4.6.2",
-        "typescript": "^5.4.2"
-    }
+  "name": "serverless-lambda-boilerplate",
+  "version": "1.1.0",
+  "description": "",
+  "author": "Mateo Cerquetella",
+  "private": true,
+  "scripts": {
+    "dev": "sls offline --reloadHandler",
+    "deploy:dev": "npm run predeploy && npx sls deploy --verbose --stage dev",
+    "predeploy": "npx serverless plugin install -n serverless-dotenv-plugin && npx serverless plugin install -n serverless-esbuild && npx serverless plugin install -n serverless-plugin-split-stacks && npx serverless plugin install -n serverless-prune-plugin && npm install && npm run prisma:generate",
+    "generate:module": "hygen module new",
+    "prisma:generate": "prisma generate",
+    "prisma:push": "prisma db push",
+    "prisma:pull": "prisma db pull",
+    "prisma:migration:new": "prisma migrate dev --name",
+    "prisma:migration:deploy": "prisma migrate deploy",
+    "prisma:migration:reset": "prisma migrate reset"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.11.0",
+    "aws-lambda": "^1.0.7",
+    "jsonwebtoken": "^9.0.2",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.136",
+    "@types/jsonwebtoken": "^9.0.6",
+    "@types/node": "^20.11.26",
+    "dotenv": "^16.3.1",
+    "esbuild": "^0.17.11",
+    "hygen": "^6.2.11",
+    "prettier": "^3.2.5",
+    "prisma": "^5.11.0",
+    "serverless": "^3.38.0",
+    "serverless-dotenv-plugin": "^6.0.0",
+    "serverless-esbuild": "^1.54.5",
+    "serverless-offline": "^13.3.0",
+    "serverless-plugin-split-stacks": "^1.14.0",
+    "serverless-prune-plugin": "^2.1.0",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.6.2",
+    "typescript": "^5.4.2",
+    "winston": "^3.17.0"
+  },
+  "prisma": {
+    "schema": "./src/prisma/schema.prisma"
+  }
 }

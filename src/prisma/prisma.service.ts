@@ -1,40 +1,48 @@
+import { logger } from 'utils/logger';
+
 import { PrismaClient } from '@prisma/client';
 
 export class PrismaService extends PrismaClient {
   private static instance: PrismaService | null = null;
 
   private constructor() {
-    super({
-      datasources: {
-        db: {
-          url: process.env.DATABASE_URL,
-        },
-      },
-    });
+    super();
   }
 
   public static getInstance(): PrismaService {
-    console.log('Attempting to get instance of PrismaService');
+    logger.debug('Attempting to get instance of PrismaService');
     if (!PrismaService.instance) {
-      console.log('No instance found, creating new one');
+      logger.debug('No instance found, creating new one');
       PrismaService.instance = new PrismaService();
     } else {
-      console.log('Instance already exists, returning existing instance');
+      logger.debug('Instance already exists, returning existing instance');
     }
     return PrismaService.instance;
   }
 
   public static async createInstance(): Promise<PrismaService> {
-    console.log('🐘', 'Connecting to the database...');
+    logger.debug('Connecting to the database...');
     const instance = new PrismaService();
-    await instance.$connect()
-      .then(() => console.log('🐘', 'Successfully connected to the database'))
-      .catch(e => console.log('❌', 'Error connecting to the database:', e));
+    await instance
+      .$connect()
+      .then(() => logger.debug('Successfully connected to the database'))
+      .catch(e => logger.error('Error connecting to the database: %s', e));
     return instance;
+  }
+
+  async testConnection(): Promise<boolean> {
+    try {
+      await this.$queryRaw`SELECT now()`;
+      logger.debug('Connection test passed.');
+      return true;
+    } catch (error) {
+      logger.error('❌ Failed to connect to the database: %s', error);
+      return false;
+    }
   }
 
   async disconnect() {
     await this.$disconnect();
-    console.log('🐘', 'Successfully disconnected from the database');
+    logger.debug('Successfully disconnected from the database');
   }
 }
